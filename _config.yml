@@ -1,5 +1,5 @@
 # Site settings
-title: Introduction to Making Web Applications
+title: Introduction to Making Web Pages
 description: Tutorial for learning the basics of web development
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://web-intro.vesavanska.com" # the base hostname & protocol for your site
@@ -11,9 +11,3 @@ navigation:
     url: /html/
   - title: 2. CSS
     url: /css/
-  - title: 3. Templates
-    url: /templates/
-  - title: 4. Databases
-    url: /databases/
-  - title: 5. Security
-    url: /security/
