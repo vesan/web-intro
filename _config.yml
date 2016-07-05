@@ -17,6 +17,3 @@ navigation:
     url: /databases/
   - title: 5. Security
     url: /security/
-
-# Build settings
-markdown: redcarpet
