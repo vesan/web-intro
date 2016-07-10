@@ -17,7 +17,7 @@ Web applications can receive input from the user though [web forms][web-form]. A
 
 In `views/picture.erb`, use the following HTML to create a form.
 
-```erb
+{% highlight erb %}
 <h2>Comments</h2>
 
 <form action="/add-comment" method="post" class="add-comment">
@@ -28,24 +28,24 @@ In `views/picture.erb`, use the following HTML to create a form.
     <br><textarea type="text" name="message"></textarea>
     <br><button type="submit">Add Comment</button>
 </form>
-```
+{% endhighlight %}
 
 This form has a hidden field for associating the submitted comment with a particular picture.
 
 Change the `/pictures/:picture.html` tell the above template the name of the picture as `@picture`.
 
-```ruby
+{% highlight ruby %}
 get '/pictures/:picture.html' do
   @title = "Picture"
   @picture = params['picture']
   @picture_url = find_picture_url(params['picture']) or halt 404
   erb :picture
 end
-```
+{% endhighlight %}
 
 In `public/style.css`, you can set the size of the form elements. The following code uses [CSS selector combinators][css-selectors] to limit the custom styles inside the comment form, to avoid accidentally changing the style of unrelated form elements. It also uses [relative length units][css-length] which depend on the font size instead of the pixels on the screen.
 
-```css
+{% highlight css %}
 .add-comment input, .add-comment textarea {
     width: 40ch;
 }
@@ -53,7 +53,7 @@ In `public/style.css`, you can set the size of the form elements. The following 
 .add-comment textarea {
     height: 3em;
 }
-```
+{% endhighlight %}
 
 Check that the form looks good.
 
@@ -66,12 +66,12 @@ Check that the form looks good.
 
 Write something into the form and press the submit button. You should get an error page because the necessary route is missing. Add the following route to your application and try to submit the form again. It should now work.
 
-```ruby
+{% highlight ruby %}
 post '/add-comment' do
   puts params
   redirect '/pictures/' + params['picture'] + '.html'
 end
-```
+{% endhighlight %}
 
 Did you notice that the `<form>` element had a `method="post"` attribute and that the route declaration also mentions `post`? This refers to the [HTTP request methods][http-methods] of which the most common ones are GET and POST. GET is meant for reading pages and it should not change the application's state, so you can safely do multiple GET request to a page. POST is used for sending data to the web server and it may be used to change the application's state.
 
@@ -89,14 +89,14 @@ Let's keep things simple and implement as much as we can without a database. Tha
 
 Use the following code in your `/add-comment` route to append the comment and the name of its author to a text file.
 
-```ruby
-post '/add-comment' do
-  File.open('comments_' + params['picture'] + '.txt', 'a') do |f|
-    f.puts(params['author'] + ': ' + params['message'])
+{% highlight ruby %}
+  post '/add-comment' do
+    File.open('comments_' + params['picture'] + '.txt', 'a') do |f|
+      f.puts(params['author'] + ': ' + params['message'])
+    end
+    redirect '/pictures/' + params['picture'] + '.html'
   end
-  redirect '/pictures/' + params['picture'] + '.html'
-end
-```
+{% endhighlight %}
 
 Try adding some comments and check that they are saved to `comments_*.txt`.
 
@@ -107,22 +107,22 @@ Try adding some comments and check that they are saved to `comments_*.txt`.
 
 Use the following code to read the contents of the text file and pass it to the picture template. The `if File.exist?` avoids the program crashing when the text file doesn't yet exist.
 
-```ruby
-get '/pictures/:picture.html' do
-  @title = "Picture"
-  @picture = params['picture']
-  @picture_url = find_picture_url(params['picture']) or halt 404
-  comments_file = 'comments_' + params['picture'] + '.txt'
-  @comments = IO.read(comments_file) if File.exist?(comments_file)
-  erb :picture
-end
-```
+{% highlight ruby %}
+  get '/pictures/:picture.html' do
+    @title = "Picture"
+    @picture = params['picture']
+    @picture_url = find_picture_url(params['picture']) or halt 404
+    comments_file = 'comments_' + params['picture'] + '.txt'
+    @comments = IO.read(comments_file) if File.exist?(comments_file)
+    erb :picture
+  end
+{% endhighlight %}
 
 In `views/picture.erb`, add the following code to show the comments.
 
-```erb
+{% highlight erb %}
 <p><%= @comments %></p>
-```
+{% endhighlight %}
 
 *Note: This template has a security vulnerability, but we'll address that in a [later chapter](/security/).*
 
@@ -139,7 +139,7 @@ To solve these issues, we will store the comments in application memory, in a st
 
 Create a global variable `$comments` which starts as an empty list `[]` (in Ruby lists are called [arrays][ruby-array]). In the `/add-comment` route append new comments to the `$comments` list using `<<`. In the `/pictures/:picture.html` route find the comments of the current picture from among all the comments in `$comments` and give them to the template as `@comments`.
 
-```ruby
+{% highlight ruby %}
 $comments = []
 
 get '/pictures/:picture.html' do
@@ -159,7 +159,7 @@ post '/add-comment' do
   }
   redirect '/pictures/' + params['picture'] + '.html'
 end
-```
+{% endhighlight %}
 
 Try adding some comments. They should look like a data structure. Try restarting the application and notice how all comments disappear then.
 
@@ -172,13 +172,13 @@ Try adding some comments. They should look like a data structure. Try restarting
 
 In `views/picture.erb`, show the comments in a human-readable format.
 
-```erb
+{% highlight erb %}
 <% for comment in @comments %>
 <p><span class="comment-author"><%= comment[:author] %>
   wrote on <%= comment[:added].strftime('%Y-%m-%d %H:%M:%S') %></span>
 <br><span class="comment-message"><%= comment[:message] %></span></p>
 <% end %>
-```
+{% endhighlight %}
 
 *Note: This template has a security vulnerability, but we'll address that in a [later chapter](/security/).*
 
@@ -200,7 +200,7 @@ We will use the [SQLite][sqlite] database, the [DataMapper][datamapper] library 
 
 Add the following code to the beginning of your application. It will create a `my-database.db` file where all your data will be saved. Inside the database it will create a *table* for storing the comments as *rows*. The table will have five *columns* (id, picture, author, message and added).
 
-```ruby
+{% highlight ruby %}
 require 'data_mapper'
 
 DataMapper::Logger.new($stdout, :debug)
@@ -218,7 +218,7 @@ end
 
 DataMapper.finalize
 DataMapper.auto_upgrade!
-```
+{% endhighlight %}
 
 When you restart your application after this change, it should print a "CREATE TABLE" line to your terminal and create a `my-database.db` file in your project folder.
 
@@ -233,7 +233,7 @@ Use [DB Browser for SQLite][sqlitebrowser] to open the `my-database.db` database
 
 In the `/add-comment` route, use `Comment.create` to save the comment to the database. You can keep the old `$comments` usage still side by side with the new code, so that no existing functionality is broken by the changes.
 
-```ruby
+{% highlight ruby %}
 post '/add-comment' do
   Comment.create(
     :picture => params['picture'],
@@ -249,7 +249,7 @@ post '/add-comment' do
   }
   redirect '/pictures/' + params['picture'] + '.html'
 end
-```
+{% endhighlight %}
 
 Go add some comments on your site. Then use DB Browser to browse the data in the `comments` table and check that the comments you just wrote were saved in the database.
 
@@ -262,7 +262,7 @@ Go add some comments on your site. Then use DB Browser to browse the data in the
 
 In the `/pictures/:picture.html` route, use [`Comment.all`][datamapper-find] to find from the database all comments for that picture, newest first. After this change, you can remove the `$comments` variable and all code that still uses it.
 
-```ruby
+{% highlight ruby %}
 get '/pictures/:picture.html' do
   @title = "Picture"
   @picture = params['picture']
@@ -270,7 +270,7 @@ get '/pictures/:picture.html' do
   @comments = Comment.all(:picture => params['picture'], :order => [:added.asc])
   erb :picture
 end
-```
+{% endhighlight %}
 
 Check the comments on the picture page now. It should show the comments which you saw saved in the database.
 
@@ -290,25 +290,25 @@ Let's start with just a placeholder for the number of comments, in order to firs
 
 In `views/pictures.erb`, add the text "0 comments" on a line below the picture, and wrap it and the picture into a `<div>` element, so that they will be grouped together.
 
-```erb
+{% highlight erb %}
 <% for url in @picture_urls %>
 <div class="album-caption">
 <a href="<%= url.sub(/\.\w+$/, '.html') %>"><img class="album-photo" src="<%= url %>"></a>
 <br>0 comments
 </div>
 <% end %>
-```
+{% endhighlight %}
 
 Use some CSS to make it look nice.
 
-```css
+{% highlight css %}
 .album-caption {
     float: left;
     text-align: center;
     padding-bottom: 0.5em;
     font-size: 80%;
 }
-```
+{% endhighlight %}
 
 ![Comment count placeholders with style](comment-count-styles.png)
 
@@ -321,7 +321,7 @@ Next replace the placeholder with the actual number of comments. The `Comment.co
 
 It used to be enough to give the `pictures` template just the list of picture URLs, but now that there are more pieces of data related to each picture, it's better to give the template a list of hashes. This way the program logic will stay out of the templates, making the code more maintainable.
 
-```ruby
+{% highlight ruby %}
 get '/pictures.html' do
   @title = "Lovely Pictures"
   @pictures = picture_urls.map { |url| {
@@ -331,18 +331,18 @@ get '/pictures.html' do
   }}
   erb :pictures
 end
-```
+{% endhighlight %}
 
 The `views/pictures.erb` template needs to be changed to use `@pictures` instead of `@picture_urls`.
 
-```erb
+{% highlight erb %}
 <% for picture in @pictures %>
 <div class="album-caption">
 <a href="<%= picture[:page_url] %>"><img class="album-photo" src="<%= picture[:picture_url] %>"></a>
 <br><%= picture[:comments] %> comments
 </div>
 <% end %>
-```
+{% endhighlight %}
 
 Add some comments for one picture and check that its comment count increases, but the others stay unchanged.
 

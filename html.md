@@ -16,7 +16,7 @@ Create a folder called `MyAwesomeSite` on your computer's desktop. This will be 
 
 Copy the following HTML code into your text editor and save it as `about.html` into your project folder. Then open the file in your web browser.
 
-```html
+{% highlight html %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +29,7 @@ Copy the following HTML code into your text editor and save it as `about.html` i
 
 </body>
 </html>
-```
+{% endhighlight %}
 
 It should look like this:
 

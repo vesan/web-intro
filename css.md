@@ -14,9 +14,9 @@ At first let's make the default text look a bit nicer by using the [Pure](http:/
 
 Add the following code inside your HTML page's `<head>` element.
 
-```HTML
+{% highlight html %}
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-```
+{% endhighlight %}
 
 *Note: The `<meta charset="UTF-8">` element must be in the beginning of `<head>`, but otherwise the order of elements inside `<head>` doesn't usually matter.*
 
@@ -29,7 +29,7 @@ Add the following code inside your HTML page's `<head>` element.
 
 To have a place where to add our own CSS, create a file `style.css` with the following content.
 
-```css
+{% highlight css %}
 h1 {
     font-size: 30px;
     color: #E0330C;
@@ -39,13 +39,13 @@ h1 {
     float: right;
     border: 1px solid #E0330C;
 }
-```
+{% endhighlight %}
 
 Add into your `<head>` a stylesheet link which points to that CSS file.
 
-```html
+{% highlight html %}
 <link rel="stylesheet" href="style.css">
-```
+{% endhighlight %}
 
 This CSS defines the visual style for the `h1` element and `profile-picture` *class*. The `.` in front of `.profile-picture` means that any element with the attribute `class="profile-picture"` will have this style.
 
@@ -69,7 +69,7 @@ Then we can start converting that into code. We'll start with the structure, the
 
 Add the following elements to your page's `<body>` and put the page content you wrote earlier inside the content section.
 
-```html
+{% highlight html %}
 <nav class="navigation">
     <ul>
         <li><a href="about.html">About</a></li>
@@ -80,7 +80,7 @@ Add the following elements to your page's `<body>` and put the page content you 
 <section class="content">
     page content goes here
 </section>
-```
+{% endhighlight %}
 
 This navigation menu is made out of an *unordered list* (`<ul>`) which contains *list items* (`<li>`) which contains links (`<a>` as in *anchor*) to the site's pages (we'll create the pictures page later).
 
@@ -97,7 +97,7 @@ To get the page layout right, it's easier to focus on one thing at a time. We'll
 
 To get ready for fiddling with the positioning of layout elements, make the edges of `.navigation` and `.content` visible by adding the following CSS code to your `style.css` file.
 
-```css
+{% highlight css %}
 .content {
     border: 1px solid Green;
 }
@@ -105,7 +105,7 @@ To get ready for fiddling with the positioning of layout elements, make the edge
 .navigation {
     border: 1px solid Blue;
 }
-```
+{% endhighlight %}
 
 ![Layout elements highlighted](prepare-for-layout-fiddling.png)
 
@@ -131,7 +131,7 @@ After the boxes are where you want them to be, remove those placeholder borders 
 
 For the navigation menu, just copy the following CSS as a starting point. If you like, you can google "css vertical navigation bar" for more examples. This kind of CSS tricks are hard to make yourself; everybody just copies them from someone else. ;-)
 
-```css
+{% highlight css %}
 .navigation ul {
     list-style: none;
     padding: 0;
@@ -151,7 +151,7 @@ For the navigation menu, just copy the following CSS as a starting point. If you
 .navigation a:hover {
     color: #F09986;
 }
-```
+{% endhighlight %}
 
 ![Finished layout styling](make-it-pretty.png)
 
