@@ -157,6 +157,26 @@ For the navigation menu, just copy the following CSS as a starting point. If you
 
 [View solution](https://github.com/orfjackal/web-intro-project/commit/4684a6bd538e3a1f751d95f99e319a1b9d45f40c)
 
+## Pictures page
+
+Last time we created a navigation menu with a link to the `pictures.html` page, but that page doesn't yet exist. Let's create it now.
+
+Make a copy of `about.html`, name it `pictures.html`, and change its title and heading. Find about a dozen images which you like from [Public Domain Pictures](http://www.publicdomainpictures.net/) and add their thumbnails as images on your `pictures.html` using the [`<img>`][html-img] tag.
+
+{% highlight html %}
+<img class="album-photo" src="http://www.publicdomainpictures.net/pictures/50000/t2/cat-looking-up.jpg">
+<img class="album-photo" src="http://www.publicdomainpictures.net/pictures/30000/t2/cat-in-the-city-5.jpg">
+<img class="album-photo" src="http://www.publicdomainpictures.net/pictures/30000/t2/annoyed-cat.jpg">
+...
+{% endhighlight %}
+
+As shown above, give the images a unique class and use CSS to make them look like a photo album. In case the pictures are of different size, you can set their [height][css-height]; the web browser will set their width automatically to maintain the picture's aspect ratio.
+
+The following example uses the CSS properties [border][css-border], [background-color][css-background-color], [margin][css-margin], [padding][css-padding] and [box-shadow][css-box-shadow].
+
+![Pictures page with some pictures](/templates/pictures-page.png)
+
+[View solution](https://github.com/orfjackal/web-intro-project/commit/b8ab72533a34efa609a47653ba899f57e802f135)
 
 [css]: https://developer.mozilla.org/en-US/docs/Web/CSS
 [css-properties]: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
