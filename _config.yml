@@ -11,3 +11,5 @@ navigation:
     url: /html/
   - title: 2. CSS
     url: /css/
+  - title: 3. Javascript
+    url: /javascript/
