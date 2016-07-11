@@ -19,7 +19,7 @@ alert('My javascript is working');
 
 Next, we need to bring this javascript to your page by adding the following script element within the head element in the *pictures.html* file.
 
-```javascript
+```html
 <script src="main.js"></script>
 ```
 
