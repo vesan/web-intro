@@ -194,4 +194,13 @@ The following example uses the CSS properties [border][css-border], [background-
 [css-border]: https://developer.mozilla.org/en-US/docs/Web/CSS/border
 [html-ul]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul
 [html-li]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul
+[html-img]: https://developer.mozilla.org/en/docs/Web/HTML/Element/img
+[css-width]: https://developer.mozilla.org/en-US/docs/Web/CSS/width
+[css-height]: https://developer.mozilla.org/en-US/docs/Web/CSS/height
+[css-background-color]: https://developer.mozilla.org/en-US/docs/Web/CSS/background-color
+[css-margin]: https://developer.mozilla.org/en-US/docs/Web/CSS/margin
+[css-padding]: https://developer.mozilla.org/en-US/docs/Web/CSS/padding
+[css-border]: https://developer.mozilla.org/en-US/docs/Web/CSS/border
+[css-box-shadow]: https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow
+
 [css-navigation-bar]: http://www.w3schools.com/css/css_navbar.asp
