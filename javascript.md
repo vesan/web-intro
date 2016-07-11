@@ -57,7 +57,7 @@ function expandPhoto(element) {
 
 The code may look like complicated magic, so lets break it down. Each time we use the $-symbol, we are using abilities provided by jQuery. The code toggles the big-photo class on the clicked element. `$(element)` is a reference to the clicked element. So the code adds the 'big-photo' class to the clicked element, or removes the class if it was already added.
 
-Lets finish this feature by adding the `onclick=expandPhoto(this)` attribute to any `<img>` element. This will call the given function every time the element is clicked. The element will then look something like the following:
+Lets finish this feature by adding the `onclick="expandPhoto(this)"` attribute to any `<img>` element. This will call the given function every time the element is clicked. The element will then look something like the following:
 
 ```html
 <img class="album-photo" onclick="expandPhoto(this)" src="cat.jpg">
