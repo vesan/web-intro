@@ -16,7 +16,7 @@ Add the following code inside your HTML page's `<head>` element.
 
 ```html
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-{% endhighlight %}
+```
 
 *Note: The `<meta charset="UTF-8">` element must be in the beginning of `<head>`, but otherwise the order of elements inside `<head>` doesn't usually matter.*
 
@@ -31,7 +31,7 @@ We could set the visual style for each HTML element individually, but that quick
 
 To have a place where to add our own CSS, create a file `style.css` with the following content.
 
-{% highlight css %}
+```css
 h1 {
     font-size: 30px;
     color: #E0330C;
@@ -41,13 +41,13 @@ h1 {
     float: right;
     border: 1px solid #E0330C;
 }
-{% endhighlight %}
+```
 
 Add into your `<head>` a stylesheet link which points to that CSS file.
 
-{% highlight html %}
+```html
 <link rel="stylesheet" href="style.css">
-{% endhighlight %}
+```
 
 This CSS defines the visual style for the `h1` element and `profile-picture` class. The `.` in front of `.profile-picture` means that any element with the `class="profile-picture"` attribute will have this style.
 
@@ -71,7 +71,7 @@ Then we can start converting that into code. We'll start with the structure, the
 
 Add the following elements to your page's `<body>` and put the page content you wrote earlier inside the content section.
 
-{% highlight html %}
+```html
 <nav class="navigation">
     <ul>
         <li><a href="about.html">About</a></li>
@@ -82,7 +82,7 @@ Add the following elements to your page's `<body>` and put the page content you 
 <section class="content">
     page content goes here
 </section>
-{% endhighlight %}
+```
 
 This navigation menu is made out of an *unordered list* (`<ul>`) which contains *list items* (`<li>`) which contains links (`<a>` as in *anchor*) to the site's pages (we'll create the pictures page later).
 
@@ -99,7 +99,7 @@ To get the page layout right, it's easier to focus on one thing at a time. We'll
 
 To get ready for fiddling with the positioning of layout elements, make the edges of `.navigation` and `.content` visible by adding the following CSS code to your `style.css` file.
 
-{% highlight css %}
+```css
 .content {
     border: 1px solid Green;
 }
@@ -107,7 +107,7 @@ To get ready for fiddling with the positioning of layout elements, make the edge
 .navigation {
     border: 1px solid Blue;
 }
-{% endhighlight %}
+```
 
 ![Layout elements highlighted](prepare-for-layout-fiddling.png)
 
@@ -133,7 +133,7 @@ After the boxes are where you want them to be, remove those placeholder borders 
 
 For the navigation menu, just copy the following CSS as a starting point. If you like, you can google "css vertical navigation bar" for more examples. This kind of CSS tricks are hard to make yourself; everybody just copies them from someone else. ;-)
 
-{% highlight css %}
+```css
 .navigation ul {
     list-style: none;
     padding: 0;
@@ -153,7 +153,7 @@ For the navigation menu, just copy the following CSS as a starting point. If you
 .navigation a:hover {
     color: #F09986;
 }
-{% endhighlight %}
+```
 
 ![Finished layout styling](make-it-pretty.png)
 
@@ -165,12 +165,12 @@ Last time we created a navigation menu with a link to the `pictures.html` page, 
 
 Make a copy of `about.html`, name it `pictures.html`, and change its title and heading. Find about a dozen images which you like from [Public Domain Pictures](http://www.publicdomainpictures.net/) and add their thumbnails as images on your `pictures.html` using the [`<img>`][html-img] tag.
 
-{% highlight html %}
+```html
 <img class="album-photo" src="http://www.publicdomainpictures.net/pictures/50000/t2/cat-looking-up.jpg">
 <img class="album-photo" src="http://www.publicdomainpictures.net/pictures/30000/t2/cat-in-the-city-5.jpg">
 <img class="album-photo" src="http://www.publicdomainpictures.net/pictures/30000/t2/annoyed-cat.jpg">
 ...
-{% endhighlight %}
+```
 
 As shown above, give the images a unique class and use CSS to make them look like a photo album. In case the pictures are of different size, you can set their [height][css-height]; the web browser will set their width automatically to maintain the picture's aspect ratio.
 

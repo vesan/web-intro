@@ -14,12 +14,12 @@ Last time we created a navigation menu with a link to the `pictures.html` page, 
 
 Make a copy of `about.html`, name it `pictures.html`, and change its title and heading. Find about a dozen images which you like from [Public Domain Pictures](http://www.publicdomainpictures.net/) and add their thumbnails as images on your `pictures.html` using the [`<img>`][html-img] tag.
 
-{% highlight html %}
+```html
 <img class="album-photo" src="http://www.publicdomainpictures.net/pictures/50000/t2/cat-looking-up.jpg">
 <img class="album-photo" src="http://www.publicdomainpictures.net/pictures/30000/t2/cat-in-the-city-5.jpg">
 <img class="album-photo" src="http://www.publicdomainpictures.net/pictures/30000/t2/annoyed-cat.jpg">
 ...
-{% endhighlight %}
+```
 
 As shown above, give the images a unique class and use CSS to make them look like a photo album. In case the pictures are of different size, you can set their [height][css-height]; the web browser will set their width automatically to maintain the picture's aspect ratio.
 
@@ -45,14 +45,14 @@ We will use the [Ruby][ruby] programming language and the [Sinatra][sinatra] web
 
 Create a file called `app.rb` and put the following code in it. This minimal web application contains a single *route* for the *path* `/hi` which will just generate a page with the text *Hello World!*
 
-{% highlight ruby %}
+```ruby
 require 'sinatra'
 require 'sinatra/reloader'
 
 get '/hi' do
   "Hello World!"
 end
-{% endhighlight %}
+```
 
 Then run the command `ruby app.rb` in your terminal. It should start a web server on your own machine in port 4567. To view it, visit <http://localhost:4567/hi> in your web browser. It should show the *Hello World!* text.
 
@@ -86,11 +86,11 @@ First try going to <http://localhost:4567/> on your current site. It should show
 
 Change `app.rb` to [redirect][sinatra-redirect] the path `/` to `/about.html` by adding the following route.
 
-{% highlight ruby %}
+```ruby
 get '/' do
   redirect to('/about.html')
 end
-{% endhighlight %}
+```
 
 Check that when you visit <http://localhost:4567/>, your web browser immediately goes to the <http://localhost:4567/about.html> address.
 
@@ -109,7 +109,7 @@ Copy `public/about.html` to `views/about.erb` and remove everything except the p
 
 Add the following routes to `app.rb` to [render][sinatra-templates] the above mentioned ERB templates.
 
-{% highlight ruby %}
+```ruby
 get '/about.html' do
   erb :about
 end
@@ -117,7 +117,7 @@ end
 get '/pictures.html' do
   erb :pictures
 end
-{% endhighlight %}
+```
 
 Check that all the pages still look the same as before in your web browser. The difference is that now all the common HTML for the layout and navigation is in a single place, so changing it and adding new pages will be easier. Templates also make it possible to have dynamic content, as we will see next.
 
@@ -130,21 +130,21 @@ You might have seen on the Internet many sites which say "Click here to find out
 
 In `app.rb`, change the `/about.html` route to contain the following code.
 
-{% highlight ruby %}
+```ruby
 get '/about.html' do
   backstreet_boys = ["A.J.", "Howie", "Nick", "Kevin", "Brian"]
   @who_i_marry = backstreet_boys.sample
   erb :about
 end
-{% endhighlight %}
+```
 
 The above code first creates a list of the names of all Backstreet Boys and stores it in the `backstreet_boys` *variable*. The next lines calls the `sample` *method* on the list, which will randomly pick one of the items in the list, and then the code stores it in the `@who_i_marry` variable. Because the variable name starts with `@`, also the template can access that variable.
 
 In `views/about.erb`, add the following code to show the value of `@who_i_marry` on the page.
 
-{% highlight erb %}
+```erb
 <p>I like Backstreet Boys a lot. I'm going to marry <%= @who_i_marry %>!</p>
-{% endhighlight %}
+```
 
 Try reloading the about page in your web browser multiple times. The name should change randomly every time that the page is reloaded.
 
@@ -174,7 +174,7 @@ In addition to inserting single items to a template, as we did a moment ago, we 
 
 Change your `/pictures.html` route to store a list of the picture URLs in a variable.
 
-{% highlight ruby %}
+```ruby
 get '/pictures.html' do
   @picture_urls = [
     "http://www.publicdomainpictures.net/pictures/50000/t2/cat-looking-up.jpg",
@@ -183,15 +183,15 @@ get '/pictures.html' do
   ]
   erb :pictures
 end
-{% endhighlight %}
+```
 
 In `views/pictures.erb`, use a *for loop* to repeat the image tag for each url in the list.
 
-{% highlight erb %}
+```erb
 <% for url in @picture_urls %>
 <img class="album-photo" src="<%= url %>">
 <% end %>
-{% endhighlight %}
+```
 
 Now check that the pictures page still looks the same as before. Also try adding a couple more pictures to make sure that the template works how it should.
 
@@ -206,12 +206,12 @@ Create a `pictures` folder under the `public` folder and save there all the pict
 
 Change your `/pictures.html` route to generate a list of the picture URLs based on the contents of the `public/pictures` directory.
 
-{% highlight ruby %}
+```ruby
 get '/pictures.html' do
   @picture_urls = Dir.glob('public/pictures/**').map { |path| path.sub('public', '') }
   erb :pictures
 end
-{% endhighlight %}
+```
 
 Check that the pictures page still works. Try adding a couple more pictures - much easier now, isn't it?
 
@@ -226,7 +226,7 @@ The above code combines multiple operations to achieve the desired result. Alway
 
 You can start a Ruby REPL by running the `irb` command in your terminal. When you type there a line of Ruby code and press Enter, it will print the result of that code. Here is an example session of experimenting what the above code does.
 
-{% highlight sh %}
+```
 $ irb
 irb(main):001:0> Dir.glob('public/pictures/**')
 => ["public/pictures/annoyed-cat.jpg", "public/pictures/cat-1373445873hvw.jpg", "public/pictures/cat-1382017414PaD.jpg", "public/pictures/cat-hunting.jpg", "public/pictures/lieblingskater-44421287869401VYcy.jpg"]
@@ -235,7 +235,7 @@ irb(main):002:0> "public/pictures/annoyed-cat.jpg".sub('public', '')
 irb(main):003:0> Dir.glob('public/pictures/**').map { |path| path.sub('public', '') }
 => ["/pictures/annoyed-cat.jpg", "/pictures/cat-1373445873hvw.jpg", "/pictures/cat-1382017414PaD.jpg", "/pictures/cat-hunting.jpg", "/pictures/lieblingskater-44421287869401VYcy.jpg"]
 irb(main):004:0> exit
-{% endhighlight %}
+```
 
 
 ## Unique titles for every page
@@ -244,15 +244,15 @@ Earlier when we started using templates, our web site didn't anymore have unique
 
 In `views/layout.erb`, get the page title from the `@title` variable.
 
-{% highlight html %}
+```html
 <title><%= @title %></title>
-{% endhighlight %}
+```
 
 Add to each of your routes the code for setting the title.
 
-{% highlight ruby %}
+```ruby
 @title = "type the title here"
-{% endhighlight %}
+```
 
 Visit every page on your site to make sure that they still work and that they have different page titles.
 
@@ -267,19 +267,19 @@ It would be nice to be able to click a picture on the pictures page to see that 
 
 In `views/pictures.erb`, make each of the pictures a link to another page. The target of the link will be the URL of the picture but with the file extension changed to `.html` (this code does it using [regular expressions][ruby-regexp]).
 
-{% highlight erb %}
+```erb
 <% for url in @picture_urls %>
 <a href="<%= url.sub(/\.\w+$/, '.html') %>"><img class="album-photo" src="<%= url %>"></a>
 <% end %>
-{% endhighlight %}
+```
 
 In `app.rb`, add the following route which uses [named parameters][sinatra-routes]. The `:picture` will match anything in that position of the path, and will make it accessible as `params['picture']`.
 
-{% highlight ruby %}
+```ruby
 get '/pictures/:picture.html' do
   "Here will be a page for " + params['picture']
 end
-{% endhighlight %}
+```
 
 Go to your pictures page and click some of the pictures there. Notice how the text shown on the page is related to page's address.
 
@@ -292,21 +292,21 @@ Go to your pictures page and click some of the pictures there. Notice how the te
 
 Create `views/picture.erb` with the following content.
 
-{% highlight erb %}
+```erb
 <img class="full-photo" src="<%= @picture_url %>">
 
 <p><a href="pictures.html">Return to album</a></p>
-{% endhighlight %}
+```
 
 Make the route render that template.
 
-{% highlight ruby %}
+```ruby
 get '/pictures/:picture.html' do
   @title = "Picture"
   @picture_url = params['picture'] + '.jpg'
   erb :picture
 end
-{% endhighlight %}
+```
 
 Visit a few picture pages pictures and check that they show the picture. You'll notice that the CSS and some links don't work, so that needs to be solved next.
 
@@ -336,7 +336,7 @@ A solution for that is to check the contents of the `public/pictures` folder to 
 
 In `app.rb`, add the methods `picture_urls` and `find_picture_url` as shown below, and change your routes to use them to set `@picture_urls` and `@picture_url`.
 
-{% highlight ruby %}
+```ruby
 get '/pictures.html' do
   @title = "Lovely Pictures"
   @picture_urls = picture_urls
@@ -356,7 +356,7 @@ end
 def find_picture_url(basename)
   picture_urls.select { |path| File.basename(path, '.*') == basename }.first
 end
-{% endhighlight %}
+```
 
 [View solution](https://github.com/orfjackal/web-intro-project/commit/ec8659f804ecc113d0682f5a4b5476762ebf8f3b)
 
@@ -369,7 +369,7 @@ In HTTP there are a bunch of numeric status codes, of which the code 404 means t
 
 Update your `/pictures/:picture.html` route to be as follows.
 
-{% highlight ruby %}
+```ruby
 get '/pictures/:picture.html' do
   @title = "Picture"
   @picture_url = find_picture_url(params['picture']) or halt 404
@@ -379,7 +379,7 @@ end
 not_found do
   "Page Not Found"
 end
-{% endhighlight %}
+```
 
 Check that <http://localhost:4567/pictures/foo.html> shows an error message. Also use the [developer tools][browser-developer-tools] to check that the status code for that page is 404.
 

@@ -28,9 +28,9 @@ The solution to injection attacks is to always sanitize your input data. For exa
 
 A common *but inferior* way is to explicitly escape the data at every place where it could be dangerous. For example in Sinatra you can create a [helper method for calling escape_html][sinatra-escape-html], which you would then use in your templates like this:
 
-{% highlight erb %}
+```erb
 <%= h scary_output %>
-{% endhighlight %}
+```
 
 The problem with this approach is that if you forget it in even one place, your application will have a security hole.
 
@@ -40,17 +40,17 @@ A better way is to make the way of least effort also the secure way. In Sinatra 
 
 In `app.rb`, add the following code to the beginning of the file to enable HTML escaping by default.
 
-{% highlight ruby %}
+```ruby
 require 'erubis'
 
 set :erb, :escape_html => true
-{% endhighlight %}
+```
 
 Have a look at the hacked picture page now. A bit too much was escaped, so in `views/layout.erb` you will need to disable escaping for the page content; replace `<%=` with `<%==`.
 
-{% highlight erb %}
+```erb
 <%== yield %>
-{% endhighlight %}
+```
 
 Now your web site is safe from the XSS attack.
 
