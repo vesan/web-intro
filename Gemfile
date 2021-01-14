@@ -1,1 +1,1 @@
-gem 'github-pages', group: :jekyll_plugins
+gem 'github-pages', '>= 78', group: :jekyll_plugins
